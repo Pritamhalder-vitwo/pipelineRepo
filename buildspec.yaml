@@ -1,13 +1,17 @@
 version: 0.2
-
+env:
+  variables:
+    AWS_ACCESS_KEY_ID: "AKIA4VRSOCLFZW557BWU"
+    AWS_SECRET_ACCESS_KEY: "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"
+    AWS_DEFAULT_REGION: "ap-east-1"
 phases:
   pre_build:
     commands:
       - mvn clean install
       - echo Logging in to Amazon ECR...
       - aws --version
-      - REPOSITORY_URI=870910399179.dkr.ecr.us-east-1.amazonaws.com/testcicd-registry
-      - aws ecr get-login-password --region ap-east-1 | docker login --username AWS --password-stdin $REPOSITORY_URI
+      - REPOSITORY_URI=339713037827.dkr.ecr.ap-south-1.amazonaws.com/javatechie-registry
+      - aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin $REPOSITORY_URI
       - COMMIT_HASH=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c 1-7)
       - IMAGE_TAG=build-$(echo $CODEBUILD_BUILD_ID | awk -F":" '{print $2}')
   build:
